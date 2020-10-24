@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	{% for post in postlist %}
+	<div class="card">
+       {% ifequal request.user post.author.username %}
+        	<a href="">Update</a>
+         	<a href="">Delete</a>
+        {% endifequal %}
+	<h3>{{post.id}}. {{post.title}}</h3>
+	<p>{{post.contexts|truncatechars:'10'}}</p>
+     <!-- |truncatechars:'10' le limited contexts dekhauxa -->
+		{% if post.image %}<img src="{{post.image.url}}" style="height: 200px; object-fit: contain; width: 250px;">{% endif %}
+
+		<h3>Author: {{post.author}}</h3>  <small>{{post.date}}</small>
+		<a href="{% url 'sellapp:blogdetail' post.id %}">Read More</a>
+		</div>
+	
+	{% endfor %}
+{% endblock %}

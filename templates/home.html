@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h5>Welcome</h5>
+<a href="{% url 'sellapp:login' %}">Login</a>
+<a href="{% url 'sellapp:signup' %}">Signup</a>
+<a href="{% url 'sellapp:logout' %}">Logout</a>
+<a href="{% url 'sellapp:blogcreate' %}">Create</a>
+<a href="{% url 'sellapp:bloglist' %}">LISt</a>
+{% endblock %}
