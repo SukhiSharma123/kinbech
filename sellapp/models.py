@@ -36,6 +36,13 @@ class Post(models.Model):
 	def __unicode__(self):
 		return str(self.id)
 
+class PostImage(models.Model):
+    product = models.ForeignKey(Post, on_delete=models.CASCADE)
+    images = models.FileField(upload_to="posts/images/", blank=True, null=True)
+
+    def __str__(self):
+        return self.product.title
+
 class Comment(models.Model):
 	comment=models.TextField()
 	post=models.ForeignKey(Post,on_delete=models.CASCADE)      #or cascade ko sata ma DO_NOTHING lekhna sakxa or SET_NULL pani rakhna sakxau

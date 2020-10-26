@@ -4,4 +4,4 @@ from .models import *
 
 
 admin.site.register(
-    [Customer, Post])
+    [Customer, Post, PostImage])

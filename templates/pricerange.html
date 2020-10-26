@@ -2,50 +2,7 @@
 {% load static %}
 
 {% block content %}
-<div class="row">
-    <div class="col-3">
-        <h2 style="text-align: center;">Filter</h2>
-          <div class="w3-dropdown-hover w3-show-small">
-      <ul style="margin-left:20px; background-color: black; color: white;height: 30px;" >CATEGORY <i class="fa fa-caret-down" style="margin-right: 10px;"></i> </ul>   
-      <div class="w3-dropdown-content w3-bar-block w3-card-4">
-        <a href="{% url 'sellapp:mobile' %}" class="w3-bar-item w3-button">Mobile</a>
-        <a href="{% url 'sellapp:bike' %}" class="w3-bar-item w3-button">Bike</a>
-        <a href="{% url 'sellapp:cycle' %}" class="w3-bar-item w3-button">Cycle</a>
-        <a href="{% url 'sellapp:fridge' %}" class="w3-bar-item w3-button">Fridge</a>
-      </div>
-    </div>
-<h5 style="margin-top: 10px;margin-left: 20px;">Places</h5>
-          <div class="w3-dropdown-hover w3-show-small">
-      <ul style="margin-left:20px; background-color: black; color: white;height: 30px;" >PLACES <i class="fa fa-caret-down" style="margin-right: 10px;"></i> </ul>   
-      <div class="w3-dropdown-content w3-bar-block w3-card-4">
-        <a href="{% url 'sellapp:mobile' %}" class="w3-bar-item w3-button">Kathmandu</a>
-        <a href="{% url 'sellapp:bike' %}" class="w3-bar-item w3-button">Janakpur</a>
-        <a href="{% url 'sellapp:cycle' %}" class="w3-bar-item w3-button">Pokhara</a>
-        <a href="{% url 'sellapp:fridge' %}" class="w3-bar-item w3-button">Biratnagar</a>
-      </div>
-    </div>
-    
-            <h5 style="text-align: center;"><b>Price Range</b></h5>
-
-        <div class="w3-dropdown-hover w3-show-small">
-      <ul style="margin-left:20px; background-color: black; color: white;height: 30px;" >HIGH/LOW <i class="fa fa-caret-down" style="margin-right: 10px;"></i> </ul>   
-      <div class="w3-dropdown-content w3-bar-block w3-card-4">
-        <a href="{% url 'sellapp:hightolow' %}" class="w3-bar-item w3-button">High to low</a>
-        <a href="{% url 'sellapp:lowtohigh' %}" class="w3-bar-item w3-button">Low to high</a>
-      </div>
-    </div>
-    <br><br>
-                <form action="{% url 'sellapp:pricerange' %}" method="POST" style="margin-left: 20px;">
-                    {% csrf_token %}
-                    Min: <input type="text" id="minsalarytxt" name="minprice" placeholder="0" style="width: 65px;border-radius: 65px;">
-                    Max: <input type="text" id="maxsalarytxt" name="maxprice" placeholder="10000" style="width: 65px;border-radius: 65px;">
-                    <input type="submit" name="search">
-                </form>
-
-
-    </div>
-    <div class="col-9">
-      <h3 class="text-center" style="color: green;">Price Range</h3>
+<h3 class="text-center" style="color: green;">Price Range</h3>
         <div class="row mt-3">
         {% for result in data %}
         <div class="card col-md-3" style="width: 300px;">
@@ -59,5 +16,4 @@
         </div>
         {% endfor %}
     </div>
-</div>
 {% endblock %}

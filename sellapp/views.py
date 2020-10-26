@@ -1,11 +1,16 @@
+from django.contrib.auth.models import User
+from django.conf import settings
 from django.shortcuts import reverse ,redirect
 from django.views.generic import * #TemplateView,ListView,DetailView,CreateView,UpdateView
-from .models import Post, Comment
+from .models import *
 from .forms import *
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.db.models import Q
+from .utils import password_reset_token
+from django.core.mail import send_mail
+from django.conf import settings
 from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
@@ -39,19 +44,7 @@ class AllprView(TemplateView):
         context['product_list'] = product_list
         return context
 
-class BlogCreateForm(CreateView):
-	template_name = "blogcreate.html"
-	model = Post
-	form_class = BlogCreateForm
 
-	def form_valid(self, form):
-		# messages.success(self.request, 'form is valid')
-		form.instance.author = self.request.user
-		form.save()
-		return redirect(self.get_success_url())
-
-	def get_success_url(self):
-		return reverse('sellapp:home')
 
 
 class BloglistView(LoginRequiredMixin, ListView):
@@ -65,99 +58,157 @@ class BloglistView(LoginRequiredMixin, ListView):
 		return super().dispatch(request)
 
 
+# class BlogCreateForm(CreateView):
+#     template_name = "blogcreate.html"
+#     model = Post
+#     form_class = BlogCreateForm
 
-class SignupFormView(FormView):
-	template_name='signupform.html'
-	form_class= SignupForm
-	success_url=reverse_lazy('sellapp:login')
-
-	def form_valid(self,form):
-		u_name=form.cleaned_data['username']
-		e_mail=form.cleaned_data['email']
-		p_word=form.cleaned_data['password']
-		cp_word=form.cleaned_data['confirm_password']
-		if p_word==cp_word:
-			if User.objects.filter(username=u_name):
-				return render(self.request,self.template_name,{
-				'form':form,
-				'error':"Username is already taken"})
-			else:
-				User.objects.create_user(username=u_name,email=e_mail,password=p_word)
-		else:
-			return render(self.request,self.template_name,{
-				'form':form,
-				'error':"Password do not match"})
-		messages.success(self.request, 'Successfully signed in')
-		return super().form_valid(form)
-
-#
-
-class LoginFormView(FormView):
-	template_name='login.html'
-	form_class=LoginForm
-	success_url=reverse_lazy('sellapp:home')
-
-	def get(self,request):
-		if request.user.is_authenticated:
-			return redirect('sellapp:home')
-		return super().get(request)
-
-	def form_valid(self,form):
-		u_name=form.cleaned_data['username']
-		p_word=form.cleaned_data['password']
-		user=authenticate(username=u_name,password=p_word)
-		if user is not None:
-			login(self.request,user)
-		else:
-			return render(self.request,self.template_name,{'form':form,'error':"Invalid Candential"})
-		messages.success(self.request, 'Welcome')
-		return super().form_valid(form)
-
-	def get_success_url(self,**kwargs):
-		self.next_url=self.request.POST.get('next')
-		if self.next_url is not None:
-			return self.next_url
-		else:
-			return self.success_url
-
-
-# class LoginFormView(FormView):
-#     template_name = "login.html"
-#     form_class = LoginForm
-#     success_url = reverse_lazy("sellapp:home")
-
-#     # form_valid method is a type of post method and is available in createview formview and updateview
 #     def form_valid(self, form):
-#         uname = form.cleaned_data.get("username")
-#         pword = form.cleaned_data["password"]
-#         usr = authenticate(username=uname, password=pword)
-#         if usr is not None and Customer.objects.filter(user=usr).exists():
-#             login(self.request, usr)
-#             messages.success(self.request, 'Welcome')
-#         else:
-#             messages.success(self.request, 'Invalid')
-#             return render(self.request, self.template_name, {"form": self.form_class, "error": "Invalid credentials"})
-
-#         return super().form_valid(form)
+#         # messages.success(self.request, 'form is valid')
+#         form.instance.author = self.request.user
+#         p = form.save()
+#         images = self.request.FILES.getlist("more_images")
+#         for i in images:
+#             PostImage.objects.create(product=p, image=1)
+#         print("true")
+#         return redirect(self.get_success_url())
 
 #     def get_success_url(self):
-#         if "next" in self.request.GET:
-#             next_url = self.request.GET.get("next")
-#             return next_url
-#         else:
-#             return self.success_url
+#         return reverse('sellapp:home')
 
 
-class LogoutView(View):
-	def get(self,request):
-		logout(request)
-		messages.success(self.request, 'You are Logged out')
-		return redirect('sellapp:home')
+class BlogCreateForm(CreateView):
+    template_name = "blogcreate.html"
+    form_class = BlogCreateForm
+    success_url = reverse_lazy("sellapp:home")
 
-class BlogDetailView(DetailView):
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        p = form.save()
+        images = self.request.FILES.getlist("more_images")
+        for i in images:
+            PostImage.objects.create(product=p, images=i)
+        return super().form_valid(form)
+
+
+
+class CustomerRegistrationView(CreateView):
+    template_name = "customerregistration.html"
+    form_class = CustomerRegistrationForm
+    success_url = reverse_lazy("sellapp:home")
+
+    def form_valid(self, form):
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password")
+        email = form.cleaned_data.get("email")
+        user = User.objects.create_user(username, email, password)
+        form.instance.user = user
+        login(self.request, user)
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        if "next" in self.request.GET:
+            next_url = self.request.GET.get("next")
+            return next_url
+        else:
+            return self.success_url
+
+
+class CustomerLogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect("sellapp:home")
+
+
+class CustomerLoginView(FormView):
+    template_name = "customerlogin.html"
+    form_class = CustomerLoginForm
+    success_url = reverse_lazy("sellapp:home")
+
+    # form_valid method is a type of post method and is available in createview formview and updateview
+    def form_valid(self, form):
+        uname = form.cleaned_data.get("username")
+        pword = form.cleaned_data["password"]
+        usr = authenticate(username=uname, password=pword)
+        if usr is not None and Customer.objects.filter(user=usr).exists():
+            login(self.request, usr)
+        else:
+            return render(self.request, self.template_name, {"form": self.form_class, "error": "Invalid credentials"})
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        if "next" in self.request.GET:
+            next_url = self.request.GET.get("next")
+            return next_url
+        else:
+            return self.success_url
+
+
+
+
+
+class PasswordForgotView(FormView):
+    template_name = "forgotpassword.html"
+    form_class = PasswordForgotForm
+    success_url = "/forgot-password/?m=s"
+
+    def form_valid(self, form):
+        # get email from user
+        email = form.cleaned_data.get("email")
+        # get current host ip/domain
+        url = self.request.META['HTTP_HOST']
+        # get customer and then user
+        customer = Customer.objects.get(user__email=email)
+        user = customer.user
+        # send mail to the user with email
+        text_content = 'Please Click the link below to reset your password. '
+        html_content = url + "/password-reset/" + email + \
+            "/" + password_reset_token.make_token(user) + "/"
+        send_mail(
+            'Password Reset Link | Django Ecommerce',
+            text_content + html_content,
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False,
+        )
+        return super().form_valid(form)
+
+class PasswordResetView(FormView):
+    template_name = "passwordreset.html"
+    form_class = PasswordResetForm
+    success_url = "/login/"
+
+    def dispatch(self, request, *args, **kwargs):
+        email = self.kwargs.get("email")
+        user = User.objects.get(email=email)
+        token = self.kwargs.get("token")
+        if user is not None and password_reset_token.check_token(user, token):
+            pass
+        else:
+            return redirect(reverse("sellapp:passworforgot") + "?m=e")
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        password = form.cleaned_data['new_password']
+        email = self.kwargs.get("email")
+        user = User.objects.get(email=email)
+        user.set_password(password)
+        user.save()
+        return super().form_valid(form)
+
+
+
+class BlogDetailView(TemplateView):
 	template_name = 'blogdetail.html'
-	model = Post
-	context_object_name = 'postdetail'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		url_pk = self.kwargs['pk']
+		post = Post.objects.get(pk=url_pk)
+		context['post'] = post
+		return context
 
 class MobileViewed(TemplateView):
     template_name = "mobileviewed.html"
@@ -231,6 +282,20 @@ def MinmaxPrice(request):
 class ProfileView(TemplateView):
 	template_name = "profile.html"
 
+	def dispatch(self, request, *args, **kwargs):
+		if request.user.is_authenticated and Customer.objects.filter(user=request.user).exists():
+			profile = Customer.objects.filter(user=request.user)
+		else:
+			return redirect("/login/?next=/profile/")
+
+		return super().dispatch(request, *args, **kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		customer = self.request.user
+		context['customer'] = customer
+		return context
+
 
 def changepPass(request):
     if request.method == 'POST':
@@ -238,7 +303,7 @@ def changepPass(request):
         if form.is_valid():
             v = form.save()
             update_session_auth_hash(request, v)
-            messages.success(request, 'Password Changed!!')
+            # messages.success(request, 'Password Changed!!')
             return redirect('sellapp:home')
     else:
         form = PasswordChangeForm(request.user)
@@ -254,7 +319,7 @@ class MypostView(TemplateView):
 		context = super().get_context_data(**kwargs)
 		current_user = request.user
 		a_id = current_user.id
-		context["results"] = Post.objects.filter(author_id=a_id)
+		context["results"] = Post.objects.filter(author_id=a_id).order_by("-id")
 		# return JsonResponse({'success':False, 'results':results})
 		# return context
 		return render(request, 'mypost.html', context)
