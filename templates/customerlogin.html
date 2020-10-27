@@ -2,7 +2,12 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
-{% block content %}       
+{% block content %} 
+<style>
+    .errorlist {
+        color: red;
+    }
+</style>      
         
     <div class="form">
           <h2>Login account</h2>
@@ -11,6 +16,9 @@
                 {{form|crispy}}
                 <br>
                 <button class="btn btn-primary">Login</button>
+                {% if error %}
+                <li style="color: red;">{{error}}</li>
+                {% endif %}
           </form>
           <p> or dont have account? <a href="{% url 'sellapp:customerregistration' %}{% if request.GET.next %}?next={{request.GET.next}}{% endif %}">Register here</a></p>
           <a href="{% url 'sellapp:passworforgot' %}"><button class="btn-secondary">Forget Password</button></a>

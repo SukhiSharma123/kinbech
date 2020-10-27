@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<div class="col-6">
+
+    <h2 style="color: black;">Comment</h2>       
+        
+
+    <form method="post" enctype="multipart/form-data" action="">  <!-- Pic upload garana lai enctype ani vitra ko ab kura dinu parxa     -->
+    {% csrf_token %}  <!-- YAsle encrypted form ma data pathau xa    -->
+    {{form|crispy}}  <!-- KAsto type ko dekhnu xa ustai type ko aauxa like p vaneko paragraph ma aauxa ani table gate tabbular form maa aauxa ul garda paragraph ma aauxa tra dotted form ma -->
+    </br>
+    <button class="brn btn-primary">Submit</button>
+    <br>
+    {% if error %}
+    {{error}}
+    {% endif %}
+  </form>
+ </div>  
+{% endblock %}

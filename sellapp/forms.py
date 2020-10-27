@@ -38,9 +38,16 @@ class CustomerRegistrationForm(forms.ModelForm):
         uname = self.cleaned_data.get("username")
         if User.objects.filter(username=uname).exists():
             raise forms.ValidationError(
-                "Customer with this username already exists.")
+                "Username already taken.")
 
         return uname
+
+    def clean_email(self):
+        e_mail = self.cleaned_data.get("email")
+        if User.objects.filter(email=e_mail).exists():
+            raise forms.ValidationError("Email already exists. Do you forgot your password?")
+
+        return e_mail
 
 
 class CustomerLoginForm(forms.Form):
@@ -86,3 +93,11 @@ class PasswordResetForm(forms.Form):
             raise forms.ValidationError(
                 "New Passwords did not match!")
         return confirm_new_password
+
+
+class CommentModelForm(forms.ModelForm):
+    comment = forms.CharField(label='', 
+                            widget=forms.TextInput(attrs={'placeholder': 'Add a comment...'}))
+    class Meta:
+        model = Comment
+        fields = ('comment',)

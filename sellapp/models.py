@@ -45,8 +45,11 @@ class PostImage(models.Model):
 
 class Comment(models.Model):
 	comment=models.TextField()
-	post=models.ForeignKey(Post,on_delete=models.CASCADE)      #or cascade ko sata ma DO_NOTHING lekhna sakxa or SET_NULL pani rakhna sakxau
+	post=models.ForeignKey(Post,on_delete=models.CASCADE, verbose_name="commentpost")      #or cascade ko sata ma DO_NOTHING lekhna sakxa or SET_NULL pani rakhna sakxau
 	date=models.DateTimeField(auto_now_add=True)
 	commented_by=models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="comment")
+
+	def __str__(self):
+		return str(self.pk)
 
 	

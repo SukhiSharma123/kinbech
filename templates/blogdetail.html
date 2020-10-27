@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
 <div class="row mt-2">
@@ -20,13 +21,74 @@
 			<p>Address: {{post.address}}</p>
 			<p>Description: {{post.description}}</p>
 			<p>Owner: {{post.author}} on {{post.date}}</p>
-			{{post.id}}
+            <h5><b>Comments:</b></h5>
+                    {% for comment in post.comment_set.all %}
+                    <p><b>{{ comment.commented_by }}:</b>
+                    {{ comment.comment }}</p>
+                    {% endfor %}
+                <br>
+            {% if request.user.is_authenticated %}
+                  <form action="" method="POST" class='ui fluid form'>
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" value={{post.id}}>
+                    {{ form|crispy }}
+                    <button type="submit" name="submit_c_form" class="ui primary button mt-1 w-full">Comment</button>
+                </form>
+    
+                {% endif %}
+</div>
+</div>
+    <script>
+        $( document ).ready(function() {
+            let display = false
+            $(".cmt_btn").click(function () {
+                if (display===false) {
+                    $(this).next(".comment-box").show("slow");
+                    display=true
+                } else {
+                    $(this).next(".comment-box").hide("slow");
+                    display=false
+                }  
+            });
 
-			<h3>Comments:</h3>
-				{% for comment in post.comment_set.all %}
-				<p>{{comment.comment}}</p>
-			
-	{%endfor %}
-</div>
-</div>
+            $('.like-form').submit(function(e){
+                e.preventDefault()
+                
+                const post_id = $(this).attr('id')
+                
+                const likeText = $(`.like-btn${post_id}`).text()
+                const trim = $.trim(likeText)
+
+                const url = $(this).attr('action')
+                
+                let res;
+                const likes = $(`.like-count${post_id}`).text()
+                const trimCount = parseInt(likes)
+                
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                        'post_id':post_id,
+                    },
+                    success: function(response) {
+                        if(trim === 'Unlike') {
+                            $(`.like-btn${post_id}`).text('Like')
+                            res = trimCount - 1
+                        } else {
+                            $(`.like-btn${post_id}`).text('Unlike')
+                            res = trimCount + 1
+                        }
+
+                        $(`.like-count${post_id}`).text(res)
+                    },
+                    error: function(response) {
+                        console.log('error', response)
+                    }
+                })
+
+            })
+        });
+    </script>
 {% endblock %}

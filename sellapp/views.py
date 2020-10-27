@@ -58,25 +58,6 @@ class BloglistView(LoginRequiredMixin, ListView):
 		return super().dispatch(request)
 
 
-# class BlogCreateForm(CreateView):
-#     template_name = "blogcreate.html"
-#     model = Post
-#     form_class = BlogCreateForm
-
-#     def form_valid(self, form):
-#         # messages.success(self.request, 'form is valid')
-#         form.instance.author = self.request.user
-#         p = form.save()
-#         images = self.request.FILES.getlist("more_images")
-#         for i in images:
-#             PostImage.objects.create(product=p, image=1)
-#         print("true")
-#         return redirect(self.get_success_url())
-
-#     def get_success_url(self):
-#         return reverse('sellapp:home')
-
-
 class BlogCreateForm(CreateView):
     template_name = "blogcreate.html"
     form_class = BlogCreateForm
@@ -89,6 +70,19 @@ class BlogCreateForm(CreateView):
         for i in images:
             PostImage.objects.create(product=p, images=i)
         return super().form_valid(form)
+
+# class CommentCreateForm(CreateView):
+#     template_name = "commentcreate.html"
+#     form_class = CommentModelForm
+#     success_url = reverse_lazy("sellapp:home")
+
+#     def form_valid(self, form):
+#         form.instance.commented_by = self.request.user
+
+#         form.save()
+#         return super().form_valid(form)
+#         # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 
 
@@ -199,16 +193,28 @@ class PasswordResetView(FormView):
         return super().form_valid(form)
 
 
+class BlogDetailView(CreateView):
+    template_name = "blogdetail.html"
+    form_class = CommentModelForm
+    # success_url = reverse_lazy("sellapp:home")
 
-class BlogDetailView(TemplateView):
-	template_name = 'blogdetail.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        url_pk = self.kwargs['pk']
+        post = Post.objects.get(pk=url_pk)
+        comment=Comment.objects.filter(id=url_pk)
+        context['post'] = post
+        context['comment'] = comment
+        return context
 
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		url_pk = self.kwargs['pk']
-		post = Post.objects.get(pk=url_pk)
-		context['post'] = post
-		return context
+    def form_valid(self, form):
+        post_id = self.request.POST.get('post_id')
+        form.instance.commented_by = self.request.user
+        form.instance.post = Post.objects.get(id=post_id)
+        form.save()
+        # return super().form_valid(form)
+        return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
+
 
 class MobileViewed(TemplateView):
     template_name = "mobileviewed.html"
@@ -280,22 +286,15 @@ def MinmaxPrice(request):
         return render(request, 'pricerange.html', {"data":pricera})
 
 class ProfileView(TemplateView):
-	template_name = "profile.html"
+    template_name = "profile.html"
 
-	def dispatch(self, request, *args, **kwargs):
-		if request.user.is_authenticated and Customer.objects.filter(user=request.user).exists():
-			profile = Customer.objects.filter(user=request.user)
-		else:
-			return redirect("/login/?next=/profile/")
-
-		return super().dispatch(request, *args, **kwargs)
-
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		customer = self.request.user
-		context['customer'] = customer
-		return context
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        customer = Customer.objects.get(user=self.request.user)
+        print(customer)
+        print(self.request.user)
+        context['customer'] = customer
+        return context
 
 def changepPass(request):
     if request.method == 'POST':

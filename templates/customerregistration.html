@@ -3,6 +3,11 @@
 {% load static %}
 
 {% block content %}
+<style>
+    .errorlist{
+        color: red;
+    }
+</style>
 <h2 style="color: black;">Signup Here</h2>
     <form method="post" enctype="multipart/form-data"> 
     {% csrf_token %}  <!-- YAsle encrypted form ma data pathau xa    -->

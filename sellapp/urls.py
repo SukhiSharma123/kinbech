@@ -8,6 +8,7 @@ urlpatterns =[
 	path('',AllprView.as_view(),name='home'),
 	# path('blog/create/',post_create,name='blogcreate'),
 	path('blog/create',BlogCreateForm.as_view(),name='blogcreate'),
+	# path('comment/create',CommentCreateForm.as_view(),name='commentcreate'),
 	path('bloglist/',BloglistView.as_view(),name='bloglist'),
 	
     path("register/",
