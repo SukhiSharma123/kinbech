@@ -11,7 +11,7 @@
             <!-- <div class="m-4"> -->
                 <h4 style="text-transform: uppercase;"><a href="{% url 'sellapp:blogdetail' p.id %}">{{p.title}}</a></h4>
                 <div class="view view-tenth">
-                <a href="{% url 'sellapp:blogdetail' p.id %}"><img src="{{p.image.url}}" alt="" class="img-responsive" style="height: 200px; object-fit: contain; width: 250px;"></a>
+                <a href="{% url 'sellapp:blogdetail' p.id %}"><img src="{{p.image.url}}" alt="" class="img-fluid" style="height: 200px; object-fit: contain; width: 250px;"></a>
             </div>
                 <p style="margin-left: 5px;">Price: <b> Rs. {{p.price}}</b></p>
                 <p style="margin-left: 5px;"><i class="fa fa-user"></i> {{p.author}}</p>
