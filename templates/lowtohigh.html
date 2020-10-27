@@ -5,7 +5,7 @@
 {% block content %}
 <h5 class="text-center" style="color: green;">Low to High</h5>
     <hr>
-    <div class="row mt-3">
+    <div class="row mt-3" style="margin-left: 20px;">
         {% for p in product_list %}
         <div class="card col-md-3" style="width: 300px;">
             <!-- <div class="m-4"> -->
@@ -19,7 +19,7 @@
         {% endfor %}
     </div>
     <nav aria-label="..." style="text-align: right;">
-        <ul class="pagination">
+        <ul class="pagination" style="margin-left: 20px;">
             {% if product_list.has_previous %}
             <li class="page-item">
                 <a class="page-link" href="?page={{ product_list.previous_page_number }}">Previous</a>

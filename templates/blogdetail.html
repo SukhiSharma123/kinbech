@@ -2,26 +2,23 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-<div class="row mt-2">
+<div class="row mt-2" style="margin-left: 10px;">
 	<div>
   <img src="{{post.image.url}}" style="height: 200px; object-fit: contain; width: 250px;">
-	<div class="row">
-                {% for a in post.postimage_set.all %}
-                <div class="col-md-4 p-3">
-                    <a href="{{a.image.url}}" target="_blank">
-                        <img src="{{a.image.url}}" class="img-fluid" style="height: 100px; object-fit: contain;" alt="hi">
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
+    <p style="text-align: center;margin-top: 0px;">More images</p>
+    {% for a in post.postimage_set.all %}
+    <img class="mySlides" src="{{a.images.url}}" style="height: 100px; object-fit: contain; width: 250px;margin-top: 0px;">
+    {% endfor %}
+
        </div>
-	<div class="col-4" style="margin-top: 5px;">
+
+	<div style="margin-top: 5px;">
 			<h4>Name: {{post.title}}</h4>
 			<p>Phone: {{post.phone}}</p>
 			<p>Address: {{post.address}}</p>
 			<p>Description: {{post.description}}</p>
 			<p>Owner: {{post.author}} on {{post.date}}</p>
-            <h5><b>Comments:</b></h5>
+            <h6><b>Comments:</b></h6>
             {{ post.comment_set.all.count }} Comment{{ post.comment_set.all|pluralize }}
                     {% for comment in post.comment_set.all %}
                     <p><b>{{ comment.commented_by }}:</b>

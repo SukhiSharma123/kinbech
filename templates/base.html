@@ -82,7 +82,7 @@ text-align: center;">
 
 <div class="row">
         <div class="col-3">
-        <h2 style="text-align: center;">Filter</h2>
+        <h2 style="margin-left: 20px;">Filter</h2>
           <div class="w3-dropdown-hover w3-show-small">
       <ul style="margin-left:20px; background-color: black; color: white;height: 30px;" >CATEGORY <i class="fa fa-caret-down" style="margin-right: 10px;"></i> </ul>   
       <div class="w3-dropdown-content w3-bar-block w3-card-4">
@@ -92,7 +92,7 @@ text-align: center;">
         <a href="{% url 'sellapp:fridge' %}" class="w3-bar-item w3-button">Fridge</a>
       </div>
     </div>
-<h5 style="margin-top: 10px;margin-left: 20px;">Places</h5>
+<!-- <h5 style="margin-top: 10px;margin-left: 20px;">Places</h5>
           <div class="w3-dropdown-hover w3-show-small">
       <ul style="margin-left:20px; background-color: black; color: white;height: 30px;" >PLACES <i class="fa fa-caret-down" style="margin-right: 10px;"></i> </ul>   
       <div class="w3-dropdown-content w3-bar-block w3-card-4">
@@ -101,9 +101,9 @@ text-align: center;">
         <a href="{% url 'sellapp:cycle' %}" class="w3-bar-item w3-button">Pokhara</a>
         <a href="{% url 'sellapp:fridge' %}" class="w3-bar-item w3-button">Biratnagar</a>
       </div>
-    </div>
+    </div> -->
     
-            <h5 style="text-align: center;"><b>Price Range</b></h5>
+            <h5 style="margin-left: 20px;"><b>Price</b></h5>
         <div class="w3-dropdown-hover w3-show-small">
       <ul style="margin-left:20px; background-color: black; color: white;height: 30px;" >HIGH/LOW <i class="fa fa-caret-down" style="margin-right: 10px;"></i> </ul>   
       <div class="w3-dropdown-content w3-bar-block w3-card-4">
@@ -220,6 +220,24 @@ window.onclick = function(event) {
                                 
             });
     </script>
+
+
+<script type="text/javascript">
+var slideIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > x.length) {slideIndex = 1}
+  x[slideIndex-1].style.display = "block";
+  setTimeout(carousel, 2000); // Change image every 2 seconds
+}
+</script>
 
 </body>
 </html>

@@ -4818,3 +4818,12 @@ input.checkbox:checked:after {
 		font-size: 13px;
 	}
 }
+
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 200px;
+  position: relative;
+  margin: auto;
+}

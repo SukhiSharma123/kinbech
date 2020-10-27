@@ -4836,3 +4836,13 @@ input.checkbox:checked:after {
     border-bottom-left-radius: 0.25rem;
     width: 300px;
 }
+
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 200px;
+  position: relative;
+  margin: auto;
+}
+

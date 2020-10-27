@@ -9,7 +9,7 @@
     }
 </style>
 <h2 style="color: black;">Signup Here</h2>
-    <form method="post" enctype="multipart/form-data"> 
+    <form method="post" enctype="multipart/form-data" style="margin-left: 20px;"> 
     {% csrf_token %}  <!-- YAsle encrypted form ma data pathau xa    -->
     {{form|crispy}}
     <br>

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+from django.template.defaultfilters import slugify
 
 
 class Customer(models.Model):
@@ -29,12 +30,19 @@ class Post(models.Model):
 	category = models.CharField(max_length=20, choices=CATEGORY)
 	address= models.CharField(max_length=20)
 	description=models.TextField()
+	slug = models.SlugField(max_length=150, unique=True)
 	price = models.DecimalField(decimal_places=2, max_digits=10)
 	date=models.DateTimeField(auto_now_add=True)
 	author=models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="post")
 
 	def __unicode__(self):
 		return str(self.id)
+
+	def save(self, *args, **kwargs):
+		super(Post, self).save(*args, **kwargs)
+		if not self.slug:
+			self.slug = slugify(self.id)
+			self.save()
 
 class PostImage(models.Model):
     product = models.ForeignKey(Post, on_delete=models.CASCADE)

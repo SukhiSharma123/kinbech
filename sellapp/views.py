@@ -200,8 +200,8 @@ class BlogDetailView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        url_pk = self.kwargs['pk']
-        post = Post.objects.get(pk=url_pk)
+        url_pk = self.kwargs['slug']
+        post = Post.objects.get(slug=url_pk)
         comment=Comment.objects.filter(id=url_pk)
         context['post'] = post
         context['comment'] = comment
@@ -290,9 +290,7 @@ class ProfileView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        customer = Customer.objects.get(user=self.request.user)
-        print(customer)
-        print(self.request.user)
+        customer = self.request.user.customer
         context['customer'] = customer
         return context
 

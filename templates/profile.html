@@ -2,11 +2,12 @@
 {% load static %}
 
 {% block content %}
-
+	<div style="margin-left: 20px;margin-top: 10px;">
             <p><span class="font-weight-bold">Name: </span> {{customer.full_name}}</p>
             <p><span class="font-weight-bold">Username: </span> {{request.user.username}}</p>
             <p><span class="font-weight-bold">Email: </span> {{request.user.email}}</p>
             <p><span class="font-weight-bold">Address: </span> {{customer.address}}</p>
             <p><span class="font-weight-bold">Joined on: </span> {{customer.joined_on}}</p>
         <button class="btn btn-danger"><a href="{% url 'sellapp:changepass' %}" style="color: white;">Change Password?</a></button>
+        </div>
 {% endblock %}
