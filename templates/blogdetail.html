@@ -22,6 +22,7 @@
 			<p>Description: {{post.description}}</p>
 			<p>Owner: {{post.author}} on {{post.date}}</p>
             <h5><b>Comments:</b></h5>
+            {{ post.comment_set.all.count }} Comment{{ post.comment_set.all|pluralize }}
                     {% for comment in post.comment_set.all %}
                     <p><b>{{ comment.commented_by }}:</b>
                     {{ comment.comment }}</p>
