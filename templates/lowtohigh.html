@@ -14,7 +14,7 @@
                 <a href="{% url 'sellapp:blogdetail' p.id %}"><img src="{{p.image.url}}" alt="" class="img-responsive" style="height: 200px; object-fit: contain; width: 250px;"></a>
             </div>
                 <p style="margin-left: 5px;">Price: <b> Rs. {{p.price}}</b></p>
-                <p style="margin-left: 5px;">Author: {{p.author}}</p>
+                <p style="margin-left: 5px;"><i class="fa fa-user"></i> {{p.author}}</p>
         </div>
         {% endfor %}
     </div>

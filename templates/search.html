@@ -13,7 +13,7 @@
                     <a href="{% url 'sellapp:blogdetail' result.id %}"><img src="{{result.image.url}}" alt="" class="img-fluid" style="height:200px; object-fit: contain;width: 250px;"></a>
                 </div>
                 <p style="margin-left: 5px;">Price: Rs. {{result.price}}</p>
-                <p style="margin-left: 5px;">Author:{{result.author}}</p>
+                <p style="margin-left: 5px;"><i class="fa fa-user"></i> {{result.author}}</p>
         </div>
         {% endfor %}
 	</div>

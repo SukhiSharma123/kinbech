@@ -23,6 +23,12 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth import update_session_auth_hash
 
+
+####### Error page ######
+def error_404_view(request, exception):
+    return render(request, '404.html')
+
+
 class HomeView(TemplateView):
 	template_name = 'home.html'
 
@@ -257,13 +263,25 @@ class FridgeViewed(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Fridge"')
+        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Electronics"')
         paginator = Paginator(results, 8)
         page_number = self.request.GET.get('page')
         product_list = paginator.get_page(page_number)
         context['product_list'] = product_list
         return context
 
+class FurnitureView(TemplateView):
+    template_name = "furniture.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category="Furnitures"')
+        paginator = Paginator(results, 8)
+        page_number = self.request.GET.get('page')
+        product_list = paginator.get_page(page_number)
+        context['product_list'] = product_list
+        return context
+        
 
 class SearchView(TemplateView):
     template_name = "search.html"

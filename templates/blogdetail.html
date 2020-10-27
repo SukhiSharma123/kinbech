@@ -7,7 +7,9 @@
   <img src="{{post.image.url}}" style="height: 200px; object-fit: contain; width: 250px;">
     <p style="text-align: center;margin-top: 0px;">More images</p>
     {% for a in post.postimage_set.all %}
+    <a href="{{a.images.url}}" target="_blank">
     <img class="mySlides" src="{{a.images.url}}" style="height: 100px; object-fit: contain; width: 250px;margin-top: 0px;">
+    </a>
     {% endfor %}
 
        </div>
@@ -17,7 +19,7 @@
 			<p>Phone: {{post.phone}}</p>
 			<p>Address: {{post.address}}</p>
 			<p>Description: {{post.description}}</p>
-			<p>Owner: {{post.author}} on {{post.date}}</p>
+			<p><i class="fa fa-user"></i> {{post.author}} on {{post.date}}</p>
             <h6><b>Comments:</b></h6>
             {{ post.comment_set.all.count }} Comment{{ post.comment_set.all|pluralize }}
                     {% for comment in post.comment_set.all %}

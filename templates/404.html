@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Error 404{% endblock %}
+
+{% block content %}
+
+		<div class="container" style="margin-left: 10px;">
+		<div class="content-404">
+			<h1><b>404 ERROR</b></h1>
+			<h1><b>OPPS!</b> We Couldn’t Find this Page</h1>
+			<p>Uh... So it looks like you brock something. The page you are looking for has up and Vanished.</p>
+			<h2><a href="{% url 'sellapp:home' %}">Bring me back Home</a></h2>
+		</div>
+	</div>
+<!-- //here ends scrolling icon -->
+{% endblock %}

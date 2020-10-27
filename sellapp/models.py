@@ -20,7 +20,8 @@ CATEGORY = (
     ("Mobile", "Mobile"),
     ("Bike", "Bike"),
     ("Cycle", "Cycle"),
-    ("Fridge", "Fridge"),
+    ("Electronics", "Electronics"),
+    ("Furnitures", "Furnitures"),
 )
 
 class Post(models.Model):
