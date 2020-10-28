@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 <style>
@@ -20,7 +21,7 @@ body {font-family: "Lato", sans-serif}
 <div class="w3-top">
   <div class="w3-bar w3-black w3-card">
     <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-    <a href="{% url 'sellapp:home' %}" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+    <a href="{% url 'sellapp:home' %}" class="w3-bar-item w3-button w3-padding-large"><img src="{% static 'images/logo.jpg' %}" style="height: 20px; width: 20px;"> HOME</a>
     <!-- <a href="#band" class="w3-bar-item w3-button w3-padding-large w3-hide-small">BAND</a> -->
     {% if request.user.is_authenticated %}
     <a href="{% url 'sellapp:blogcreate' %}" class="w3-bar-item w3-button w3-padding-large w3-hide-small">POST</a>
@@ -81,9 +82,11 @@ text-align: center;">
 </div>
 
 
-<div class="row">
-        <div class="col-3">
-        <h2 style="margin-left: 20px;">Filter</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+    
+ <h2 style="margin-left: 20px;">Filter</h2>
           <div class="w3-dropdown-hover w3-show-small">
       <ul style="margin-left:20px; background-color: black; color: white;height: 30px;" >CATEGORY <i class="fa fa-caret-down" style="margin-right: 10px;"></i> </ul>   
       <div class="w3-dropdown-content w3-bar-block w3-card-4">
@@ -94,7 +97,7 @@ text-align: center;">
         <a href="{% url 'sellapp:furniture' %}" class="w3-bar-item w3-button">Furnitures</a>
       </div>
     </div>
-<!-- <h5 style="margin-top: 10px;margin-left: 20px;">Places</h5>
+<h5 style="margin-top: 10px;margin-left: 20px;">Places</h5>
           <div class="w3-dropdown-hover w3-show-small">
       <ul style="margin-left:20px; background-color: black; color: white;height: 30px;" >PLACES <i class="fa fa-caret-down" style="margin-right: 10px;"></i> </ul>   
       <div class="w3-dropdown-content w3-bar-block w3-card-4">
@@ -103,7 +106,7 @@ text-align: center;">
         <a href="{% url 'sellapp:cycle' %}" class="w3-bar-item w3-button">Pokhara</a>
         <a href="{% url 'sellapp:electronics' %}" class="w3-bar-item w3-button">Biratnagar</a>
       </div>
-    </div> -->
+    </div>
     
             <h5 style="margin-left: 20px;"><b>Price</b></h5>
         <div class="w3-dropdown-hover w3-show-small">
@@ -122,12 +125,17 @@ text-align: center;">
                     <input type="submit" name="search">
                 </form>
     
+
+
     </div>
-      <div class="col-9">
-      {% block content %}
+    <div class="col-8">
+       {% block content %}
       {% endblock %}
-      </div>
+    </div>
+
+  </div>
 </div>
+
 
 <div style="width: 100%;">
 <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
