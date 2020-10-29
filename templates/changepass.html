@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-    <form method="POST" style="margin-left: 20px;">
+    <form method="POST">
     {% csrf_token %}
     {{form|crispy}}
     <button type="submit">change password</button>

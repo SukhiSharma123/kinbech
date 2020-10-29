@@ -3,7 +3,7 @@
 
 {% block content %}
 
-        <div class="row mt-3" style="margin-left: 20px;">
+        <div class="row mt-3">
         {% for result in results %}
         <div class="card col-md-3" style="width: 300px;">
             <!-- <div class="m-4"> -->
@@ -13,7 +13,7 @@
                 </div>
                 <p style="margin-left: 5px;">Price: Rs. {{result.price}}</p>
                 <p style="margin-left: 5px;"><i class="fa fa-user"></i> {{result.author}}</p>
-                <p style="margin-left: 5px;"> <button>    <a href="{% url 'sellapp:blogupdate' result.id %}">Update Post</a></button><button style="margin-left: 0px;"><a href="{% url 'sellapp:blogdelete' result.id %}" style="margin-left: 0px;">Delete Post</a></button></p>
+                <p> <button>    <a href="{% url 'sellapp:blogupdate' result.id %}">Update Post</a></button><button style="margin-left: 0px; width: 104px;"><a href="{% url 'sellapp:blogdelete' result.id %}" style="margin-left: 0px;">Delete Post</a></button></p>
         </div>
         {% endfor %}
     </div>
