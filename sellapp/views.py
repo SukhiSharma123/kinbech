@@ -351,7 +351,7 @@ class SearchView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         kw = self.request.GET.get("keyword")
-        results = Post.objects.filter(Q(title__icontains=kw) | Q(description__icontains=kw) | Q(price__icontains=kw) | Q(address__icontains=kw) | Q(category__icontains=kw))
+        results = Post.objects.filter(Q(title__icontains=kw) | Q(description__icontains=kw) | Q(price__icontains=kw) | Q(address__icontains=kw) | Q(category__icontains=kw)).order_by("price")
         context['results'] = results
         return context
 
