@@ -3,13 +3,14 @@
 {% block title %}All{% endblock %}
 
 {% block content %}
-<h3 class="text-center" style="color: green;">Mobiles</h3>
+    <h3 class="text-center" style="color: green;">Furnitures </h3>
     <hr>
+
     <div class="w3-dropdown-hover w3-show-small">
       <ul style="background-color: black; color: white;height: 30px;" >HIGH/LOW <i class="fa fa-caret-down" style="margin-right: 10px;"></i> </ul>   
       <div class="w3-dropdown-content w3-bar-block w3-card-4">
-        <a href="{% url 'sellapp:mobiledec' %}" class="w3-bar-item w3-button">High to low</a>
-        <a href="{% url 'sellapp:mobile' %}" class="w3-bar-item w3-button">Low to high</a>
+        <a href="{% url 'sellapp:furnituredesc' %}" class="w3-bar-item w3-button">High to low</a>
+        <a href="{% url 'sellapp:furniture' %}" class="w3-bar-item w3-button">Low to high</a>
       </div>
     </div>
 

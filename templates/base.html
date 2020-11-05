@@ -46,8 +46,8 @@ body {font-family: "Lato", sans-serif}
     <a href="{% url 'sellapp:customerlogout' %}" class="w3-bar-item w3-button w3-padding-large w3-hide-small">LOGOUT</a>
     {% endif %}
     <form class="example mt-2" action="{% url 'sellapp:search' %}" method="GET">
-  <input type="text" placeholder="Search.." name="keyword" onfocus="this.value = '';" onblur="if (this.value == '')" required>
-  <button type="submit"><i class="fa fa-search"></i></button>
+  <input type="text" placeholder="Search.." name="keyword" onfocus="this.value = '';" onblur="if (this.value == '')" required style="color: black;">
+  <button type="submit"><i class="fa fa-search" style="color: black;"></i></button>
 </form>
   </div>
 </div>

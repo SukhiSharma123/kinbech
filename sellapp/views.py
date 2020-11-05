@@ -227,7 +227,19 @@ class MobileViewed(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Mobile"')
+        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Mobile" ORDER BY price ASC')
+        paginator = Paginator(results, 8)
+        page_number = self.request.GET.get('page')
+        product_list = paginator.get_page(page_number)
+        context['product_list'] = product_list
+        return context
+
+class MobileDecViewed(TemplateView):
+    template_name = "mobiledecviewed.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Mobile" ORDER BY price ASC')
         paginator = Paginator(results, 8)
         page_number = self.request.GET.get('page')
         product_list = paginator.get_page(page_number)
@@ -239,19 +251,44 @@ class BikeViewed(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Bike"')
+        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Bike" ORDER BY price ASC')
         paginator = Paginator(results, 8)
         page_number = self.request.GET.get('page')
         product_list = paginator.get_page(page_number)
         context['product_list'] = product_list
         return context
 
+class BikeDecViewed(TemplateView):
+    template_name = "bikedecviewed.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Bike" ORDER BY price DESC')
+        paginator = Paginator(results, 8)
+        page_number = self.request.GET.get('page')
+        product_list = paginator.get_page(page_number)
+        context['product_list'] = product_list
+        return context
+
+
 class CycleViewed(TemplateView):
     template_name = "cycleviewed.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Cycle"')
+        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Cycle" ORDER BY price ASC')
+        paginator = Paginator(results, 8)
+        page_number = self.request.GET.get('page')
+        product_list = paginator.get_page(page_number)
+        context['product_list'] = product_list
+        return context
+
+class CycleDecViewed(TemplateView):
+    template_name = "cycledecviewed.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Cycle" ORDER BY price DESC')
         paginator = Paginator(results, 8)
         page_number = self.request.GET.get('page')
         product_list = paginator.get_page(page_number)
@@ -263,7 +300,19 @@ class FridgeViewed(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Electronics"')
+        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Electronics" ORDER BY price ASC')
+        paginator = Paginator(results, 8)
+        page_number = self.request.GET.get('page')
+        product_list = paginator.get_page(page_number)
+        context['product_list'] = product_list
+        return context
+
+class FridgeDecViewed(TemplateView):
+    template_name = "fridgedecviewed.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category ="Electronics" ORDER BY price DESC')
         paginator = Paginator(results, 8)
         page_number = self.request.GET.get('page')
         product_list = paginator.get_page(page_number)
@@ -275,13 +324,26 @@ class FurnitureView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category="Furnitures"')
+        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category="Furnitures" ORDER BY price ASC')
         paginator = Paginator(results, 8)
         page_number = self.request.GET.get('page')
         product_list = paginator.get_page(page_number)
         context['product_list'] = product_list
         return context
         
+
+class FurnitureDescView(TemplateView):
+    template_name = "furnituredesc.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        results = Post.objects.raw('SELECT * FROM sellapp_post WHERE category="Furnitures" ORDER BY price DESC')
+        paginator = Paginator(results, 8)
+        page_number = self.request.GET.get('page')
+        product_list = paginator.get_page(page_number)
+        context['product_list'] = product_list
+        return context
+
 
 class SearchView(TemplateView):
     template_name = "search.html"
