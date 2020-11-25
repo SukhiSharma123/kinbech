@@ -20,13 +20,16 @@
 			<p>Phone: {{post.phone}}</p>
 			<p>Address: {{post.address}}</p>
 			<p>Description: {{post.description}}</p>
-			<p><i class="fa fa-user"></i> {{post.author}} on {{ post.date|date:'d M, Y' }}</p><br>
-            <h6><b>Comments:</b></h6>
-            {{ post.comment_set.all.count }} Comment{{ post.comment_set.all|pluralize }}
-                    {% for comment in post.comment_set.all %}
-                    <p style="font-size: 13px;"><b>{{ comment.commented_by }}:</b>
-                    {{ comment.comment }}</p>
-                    {% endfor %}
+			<p style="margin-bottom: 2px;"><i class="fa fa-user"></i> {{post.author}} on {{ post.date|date:'d M, Y' }}</p>
+            <!-- <h6><b>Comments:</b></h6> -->
+            <p style="margin-top: 0px;margin-bottom: 0px;">{{ post.comment_set.all.count }} Comment{{ post.comment_set.all|pluralize }}</p>
+                    <button class="cmt_btn ui button mb-1">show / hide comments</button>
+                    <div class="comment-box">
+                        {% for comment in post.comment_set.all %}
+                        <p style="font-size: 13px;"><b>{{ comment.commented_by }}:</b>
+                        {{ comment.comment }}</p>
+                        {% endfor %}
+                    </div>
             {% if request.user.is_authenticated %}
                   <form action="" method="POST" class='ui fluid form'>
                     {% csrf_token %}
@@ -37,6 +40,8 @@
     
                 {% endif %}
 </div>
+                
+
 </div>
 {% endblock %}
 {% block scripts %}
