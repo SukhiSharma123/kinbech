@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-        {% if result in results %}
         <div class="row mt-3">
         {% for result in results %}
 
@@ -18,7 +17,8 @@
         </div>
         {% endfor %}
     </div>
-    {% else %}
+    {% if result not in results%}
+
     <div class="row mt-3">
         <h3>You have not posted yet..</h3>
     </div>
