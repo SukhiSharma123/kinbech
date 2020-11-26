@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
 <style>
 body {font-family: "Lato", sans-serif}
 .mySlides {display: none}
@@ -20,7 +21,7 @@ body {font-family: "Lato", sans-serif}
 <div class="w3-container">
 <!-- Navbar -->
 <div class="w3-top">
-  <div class="w3-bar w3-black w3-card" style="margin-left: -17px;">
+  <div class="w3-bar w3-blue w3-card" style="margin-left: -17px;">
     <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     <a href="{% url 'sellapp:home' %}" class="w3-bar-item w3-button w3-padding-large"><img src="{% static 'images/logo1.jpeg' %}" style="height: 20px; width: 20px;"> HOME</a>
     <!-- <a href="#band" class="w3-bar-item w3-button w3-padding-large w3-hide-small">BAND</a> -->
@@ -45,10 +46,15 @@ body {font-family: "Lato", sans-serif}
     <a href="{% url 'sellapp:profile' %}" class="w3-bar-item w3-button w3-padding-large w3-hide-small">PROFILE</a>
     <a href="{% url 'sellapp:customerlogout' %}" class="w3-bar-item w3-button w3-padding-large w3-hide-small">LOGOUT</a>
     {% endif %}
-    <form class="example mt-2" action="{% url 'sellapp:search' %}" method="GET">
-  <input type="text" placeholder="Search.." name="keyword" onfocus="this.value = '';" onblur="if (this.value == '')" required style="color: black;">
-  <button type="submit"><i class="fa fa-search" style="color: black;"></i></button>
-</form>
+    <i class="cmt_btn fa fa-search" arial-hidden="true" style="margin: 15px 0 0 20px;position: absolute;"></i>
+      <div class="search-box">
+        <p>
+        <form class="example mt-2" action="{% url 'sellapp:search' %}" method="GET">
+        <input type="text" placeholder="Search.." name="keyword" onfocus="this.value = '';" onblur="if (this.value == '')" required style="color: black;height: 50px;">
+        <button type="submit" style="width: 50px;height: 50px;"><i class="fa fa-search" style="color: black;text-align: center;"></i></button>
+        </form>
+      </p>
+      </div>
   </div>
 </div>
 <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
@@ -308,6 +314,21 @@ function carousel() {
                     display=true
                 } else {
                     $(this).next(".comment-box").hide("slow");
+                    display=false
+                }  
+            });
+        });
+    </script>
+
+<script>
+        $( document ).ready(function() {
+            let display = false;
+            $(".cmt_btn").click(function () {
+                if (display===false) {
+                    $(this).next(".search-box").show("slow");
+                    display=true
+                } else {
+                    $(this).next(".search-box").hide("slow");
                     display=false
                 }  
             });
