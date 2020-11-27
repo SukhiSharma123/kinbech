@@ -58,7 +58,7 @@ body {font-family: "Lato", sans-serif}
       </div>
   </div>
 </div>
-  
+</div>
 <!-- End Page Content -->
 <!-- <br>
 <br>
@@ -137,8 +137,8 @@ text-align: center;">
   <div class="row">
     <div class="col-4">
     
- <h2>Filter</h2>
-          <div class="w3-dropdown-hover w3-show-small">
+ <h2 style="margin-left: 15px;">Filter</h2>
+          <div class="w3-dropdown-hover w3-show-small" style="margin-left: 15px;">
       <ul style="background-color: black; color: white;height: 30px;" >CATEGORY <i class="fa fa-caret-down" style="margin-right: 10px;"></i> </ul>   
       <div class="w3-dropdown-content w3-bar-block w3-card-4">
         <a href="{% url 'sellapp:mobile' %}" class="w3-bar-item w3-button">Mobile</a>
@@ -159,8 +159,8 @@ text-align: center;">
       </div>
     </div>
      -->
-            <h5><b>Price</b></h5>
-        <div class="w3-dropdown-hover w3-show-small">
+            <h5 style="margin-left: 15px;"><b>Price</b></h5>
+        <div class="w3-dropdown-hover w3-show-small" style="margin-left: 15px;">
       <ul style="background-color: black; color: white;height: 30px;" >HIGH/LOW <i class="fa fa-caret-down" style="margin-right: 10px;"></i> </ul>   
       <div class="w3-dropdown-content w3-bar-block w3-card-4">
         <a href="{% url 'sellapp:hightolow' %}" class="w3-bar-item w3-button">High to low</a>
@@ -169,7 +169,7 @@ text-align: center;">
     </div>
     <br><br>
             
-                <form action="{% url 'sellapp:pricerange' %}" method="POST">
+                <form action="{% url 'sellapp:pricerange' %}" method="POST" style="margin-left: 15px;">
                     {% csrf_token %}
                     Min: <input type="text" id="minsalarytxt" name="minprice" placeholder="0" style="width: 65px;border-radius: 65px;">
                     Max: <input type="text" id="maxsalarytxt" name="maxprice" placeholder="10000" style="width: 65px;border-radius: 65px;">
